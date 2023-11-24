@@ -47,6 +47,9 @@ double runningTime = 0.f;
 void The_Game::_ready()
 {
     node = get_node<Node>("printer_node");
+    audioStreamPlayer = get_node<Node>("AudioStreamPlayer");
+
+    audioStreamPlayer->call("play");
 }
 
 void The_Game::_process(double delta)

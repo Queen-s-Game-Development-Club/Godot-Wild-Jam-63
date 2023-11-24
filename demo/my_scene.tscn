@@ -1,19 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbs5tbaag702m"]
+[gd_scene load_steps=3 format=3 uid="uid://dbs5tbaag702m"]
 
 [ext_resource type="Script" path="res://printer.gd" id="1_cym12"]
+[ext_resource type="AudioStream" uid="uid://bbfam3mvael7" path="res://meme_song.mp3" id="1_qaf35"]
 
 [node name="myScene" type="Node2D"]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="The_Game" type="The_Game" parent="."]
 
-[node name="Obstacle" type="StaticBody2D" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="The_Game"]
+stream = ExtResource("1_qaf35")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacle"]
+[node name="Obstacle" type="StaticBody2D" parent="The_Game"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="The_Game/Obstacle"]
 position = Vector2(20, -1)
 scale = Vector2(1.21023, 1.15341)
 polygon = PackedVector2Array(11, -11, 0, -9.53694, -11, -1, 0, 11, 11, 0)
-
-[node name="The_Game" type="The_Game" parent="."]
 
 [node name="printer_node" type="Node" parent="The_Game"]
 script = ExtResource("1_cym12")

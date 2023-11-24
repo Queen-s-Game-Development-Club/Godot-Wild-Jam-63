@@ -15,6 +15,7 @@ class The_Game : public Node {
 // specific thing.
 
     Node *node;
+    Node *audioStreamPlayer;
 
 public:
     void _ready();
