@@ -10,7 +10,7 @@
 [node name="The_Game" type="The_Game" parent="."]
 
 [node name="camera" type="Camera2D" parent="The_Game"]
-position = Vector2(0.491939, -9.98789)
+position = Vector2(3.42898, -9.39373)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="The_Game"]
 stream = ExtResource("1_qaf35")
@@ -29,6 +29,6 @@ texture = ExtResource("2_pmf2l")
 script = ExtResource("1_cym12")
 
 [node name="player" type="Sprite2D" parent="The_Game"]
-position = Vector2(10.9827, 19.9516)
+position = Vector2(16.4422, 17.6484)
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("3_7m604")
