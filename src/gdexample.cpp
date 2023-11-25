@@ -3,6 +3,12 @@
 
 using namespace godot;
 
+// TODO: In a real game what we might do would be
+// to create scripts that sit on the player
+// and the obstacles, so that the game is descending down
+// the tree here.
+// make those "objects" themselves do the descending.
+
 float sign(float a)
 {
     return a > 0 ? 1.f :  -1.f;
