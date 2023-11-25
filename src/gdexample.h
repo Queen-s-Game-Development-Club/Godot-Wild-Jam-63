@@ -15,16 +15,16 @@
 namespace godot {
 
 class The_Game : public Node {
-        GDCLASS(The_Game, Node)
+    GDCLASS(The_Game, Node)
 
-       void _get_property_list(List<PropertyInfo> *p_list) const;
+    void _get_property_list(List<PropertyInfo> *p_list) const;
 
     static void _bind_methods();
-// TODO: it seems like the above thing here is a GDExtension
-// specific thing.
+    // TODO: it seems like the above thing here is a GDExtension
+    // specific thing.
 
-// NOTE: used https://github.com/Stary2001/godot/blob/00c6ce9716ed542997bc2b59136bceb3729db970/editor/import_dock.cpp.
-// also as mentioned in https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_cpp_example.html#adding-properties.
+    // NOTE: used https://github.com/Stary2001/godot/blob/00c6ce9716ed542997bc2b59136bceb3729db970/editor/import_dock.cpp.
+    // also as mentioned in https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_cpp_example.html#adding-properties.
 
     bool _set(const StringName &name, const Variant &value);
     bool _get(const StringName &name, Variant &ret) const;
@@ -36,7 +36,7 @@ class The_Game : public Node {
     Node *node;
     Node *audioStreamPlayer;
 
-// TODO: this is not a scalable solution.
+    // TODO: this is not a scalable solution.
     Node *jumpPlayer;
 
     Node2D *player;
