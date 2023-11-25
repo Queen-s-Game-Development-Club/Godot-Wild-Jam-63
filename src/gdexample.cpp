@@ -12,11 +12,40 @@ float sign(float a)
 void The_Game::_bind_methods()
 {}
 
+bool The_Game::_set(const StringName &p_name, const Variant &p_value)
+{
+
+        char buffer[256];
+        sprintf(buffer, "we rich2: %d", int32_t(p_value));
+        node->call( "my_print", buffer);
+
+
+    if (values.has(p_name)) {
+			values[p_name] = p_value;
+
+
+			return true;
+		}
+
+		return false;
+}
+
+#define CAMERA_SPEED_PROP "Camera Speed"
+
+bool The_Game::_get(const StringName &p_name, Variant &r_ret) const {
+		if (values.has(p_name)) {
+			r_ret = values[p_name];
+			return true;
+		}
+
+		return false;
+	}
+
 void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
 {
 
 	p_list->push_back(
-        PropertyInfo(Variant::INT, "My Property", PROPERTY_HINT_RANGE, "0,30,1", PROPERTY_USAGE_EDITOR));
+        PropertyInfo(Variant::INT, CAMERA_SPEED_PROP, PROPERTY_HINT_RANGE, "0,100,1", PROPERTY_USAGE_EDITOR));
     
 }
 
@@ -25,6 +54,12 @@ void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
 
 void The_Game::_ready()
 {
+
+// add the editor properties
+    {
+        values.insert(CAMERA_SPEED_PROP, Variant(10));
+    }
+
 
     obstacle = get_node<Node2D>("Obstacle");
     node = get_node<Node>("printer_node");
@@ -115,6 +150,7 @@ if (mouseBttnEvent){
 void The_Game::_process(double delta)
 {
     runningTime += delta;
+    runningTime_noReset += delta;
 
     if (runningTime > 5.f)
     {
@@ -123,6 +159,11 @@ void The_Game::_process(double delta)
         double something = 5.1;
         static int d = 3;
 //        printf( "%s, %f, %d", str, something, d++ );
+
+        char buffer[256];
+        sprintf(buffer, "we rich: %f", runningTime_noReset);
+        node->call( "my_print", buffer);
+
 
 // can we get into a debugger?
         node->call( "my_print", "Jump!" ); 
@@ -141,7 +182,14 @@ void The_Game::_process(double delta)
     else
     {
 
-    Vector2 newCameraPos = Vector2((10.0 * sin(runningTime)), (10.0 * -cos(runningTime)));
+//        Vector2 newCameraPos = Vector2( runningTime_noReset/10.f+(10.0 * sin(runningTime)), runningTime_noReset/10.f+(10.0 * -cos(runningTime)));
+
+
+// TODO: E.g. constants like this should be exposed in the editor window.
+// we actually already began something like that. how do we continue
+// to complete that thing?
+
+        Vector2 newCameraPos = Vector2( 0.f, runningTime_noReset* int32_t(values[CAMERA_SPEED_PROP]) );
     camera->call("set_position", newCameraPos);
 
 	Vector2 new_position = player->get_position() + playerVelocity * delta;

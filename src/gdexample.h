@@ -9,6 +9,7 @@
 #include <godot_cpp/classes/rectangle_shape2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 
+#include <godot_cpp/templates/vmap.hpp>
 
 namespace godot {
 
@@ -20,6 +21,14 @@ class The_Game : public Node {
     static void _bind_methods();
 // TODO: it seems like the above thing here is a GDExtension
 // specific thing.
+
+// NOTE: used https://github.com/Stary2001/godot/blob/00c6ce9716ed542997bc2b59136bceb3729db970/editor/import_dock.cpp.
+// also as mentioned in https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_cpp_example.html#adding-properties.
+
+    bool _set(const StringName &name, const Variant &value);
+    bool _get(const StringName &name, Variant &ret) const;
+
+    VMap<StringName, Variant> values;
 
     Node *node;
     Node *audioStreamPlayer;
@@ -33,6 +42,7 @@ class The_Game : public Node {
     Vector2 playerVelocity;
 
     double runningTime = 0.f;
+    double runningTime_noReset=0.f;
 
     Node *camera;
 
