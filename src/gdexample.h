@@ -17,6 +17,8 @@ class The_Game : public Node {
     Node *node;
     Node *audioStreamPlayer;
 
+    Node *player;
+
 public:
     void _ready();
     void _process(double delta);

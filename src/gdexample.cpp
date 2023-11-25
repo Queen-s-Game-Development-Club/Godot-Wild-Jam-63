@@ -48,6 +48,7 @@ void The_Game::_ready()
 {
     node = get_node<Node>("printer_node");
     audioStreamPlayer = get_node<Node>("AudioStreamPlayer");
+    player = get_node<Node>("player");
 
     audioStreamPlayer->call("play");
 }
@@ -70,6 +71,10 @@ void The_Game::_process(double delta)
 
       runningTime = 0.f;
     }
+
+	Vector2 new_position = Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
+
+	player->call("set_position", new_position);//  set_position(new_position);
     
 }
 
