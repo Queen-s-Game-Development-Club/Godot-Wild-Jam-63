@@ -21,35 +21,32 @@ void The_Game::_bind_methods()
 bool The_Game::_set(const StringName &p_name, const Variant &p_value)
 {
 
-        char buffer[256];
-        sprintf(buffer, "we rich2: %d", int32_t(p_value));
-        node->call( "my_print", buffer);
+    char buffer[256];
+    sprintf(buffer, "we rich2: %d", int32_t(p_value));
+    node->call( "my_print", buffer);
 
 
     if (values.has(p_name)) {
-			values[p_name] = p_value;
+        values[p_name] = p_value;
+        return true;
+    }
 
-
-			return true;
-		}
-
-		return false;
+    return false;
 }
 
 #define CAMERA_SPEED_PROP "Camera Speed"
 
 bool The_Game::_get(const StringName &p_name, Variant &r_ret) const {
-		if (values.has(p_name)) {
-			r_ret = values[p_name];
-			return true;
-		}
+    if (values.has(p_name)) {
+        r_ret = values[p_name];
+        return true;
+    }
 
-		return false;
-	}
+    return false;
+}
 
 void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
 {
-
 	p_list->push_back(
         PropertyInfo(Variant::INT, CAMERA_SPEED_PROP, PROPERTY_HINT_RANGE, "0,100,1", PROPERTY_USAGE_EDITOR));
     
@@ -61,11 +58,10 @@ void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
 void The_Game::_ready()
 {
 
-// add the editor properties
+    // add the editor properties
     {
         values.insert(CAMERA_SPEED_PROP, Variant(10));
     }
-
 
     obstacle = get_node<Node2D>("Obstacle");
     node = get_node<Node>("printer_node");
@@ -76,11 +72,9 @@ void The_Game::_ready()
     jumpPlayer = get_node<Node>("AudioStreamPlayer2");
 
 
-//    audioStreamPlayer->call("play");
+    audioStreamPlayer->call("play");
 
-
-
-// TODO: log the shits here if we can't find the stuff.
+    // TODO: log the shits here if we can't find the stuff.
     if (obstacle)
     {
         int width;
@@ -100,7 +94,7 @@ void The_Game::_ready()
 
         if (shape)
         {
-// create a shape 2d.
+            // create a shape 2d.
             groundPlaneColBox.set_size(Vector2(width, height));
             groundPlaneRef = Ref<Shape2D>(&groundPlaneColBox);
             shape->set_shape(groundPlaneRef);
@@ -112,40 +106,26 @@ void The_Game::_ready()
     if (canvas)
         scoreLabel = canvas->get_node<Label>("Label");
 
-// TODO: is there any way that we can just quit game if we can't get
-// any of these things? that's the sensible thing to do.
+    // TODO: is there any way that we can just quit game if we can't get
+    // any of these things? that's the sensible thing to do.
 
-// Set the init player velocity.
+    // Set the init player velocity.
     player->set_position(Vector2(0,0));
-//    playerVelocity = Vector2(0.f, -20.f);;
+
+    // TODO: figure out why the hell this wasn't working.
+    //    playerVelocity = Vector2(0.f, -20.f);;
+
     playerVelocity = Vector2(0,0);
 
 }
 
 void The_Game::_input(const Ref<InputEvent> &event)
 {
-    
-#if 0
-const InputEventKey *key_event = Object::cast_to<const InputEventKey>(*event);	
-if (key_event) {
-		emit_custom_signal(String("_input: ") + key_event->get_key_label(), key_event->get_unicode());
-	}
-#endif
+    const InputEventMouseButton *mouseBttnEvent = Object::cast_to<const InputEventMouseButton>(*event);
 
-const InputEventMouseButton *mouseBttnEvent = Object::cast_to<const InputEventMouseButton>(*event);
-
-if (mouseBttnEvent){
+    if (mouseBttnEvent){
         node->call( "my_print", "mouse button event" ); 
-}
-
-#if 0
-   elif event is InputEventMouseMotion:
-	   print("Mouse Motion at: ", event.position)
-
-           // Print the size of the viewport.
-   print("Viewport Resolution is: ", get_viewport().get_visible_rect().size)
-#endif
-
+    }
 }
 
 // TODO: we could hide the mouse cursor and animate a sprite to follow
@@ -168,21 +148,21 @@ void The_Game::_process(double delta)
         const char *str = "we rich";        
         double something = 5.1;
         static int d = 3;
-//        printf( "%s, %f, %d", str, something, d++ );
+        //        printf( "%s, %f, %d", str, something, d++ );
 
         char buffer[256];
         sprintf(buffer, "we rich: %f", runningTime_noReset);
         node->call( "my_print", buffer);
 
 
-// can we get into a debugger?
+        // TODO: can we get into a debugger?
         node->call( "my_print", "Jump!" ); 
 
-    jumpPlayer->call("play");
+        jumpPlayer->call("play");
 
-//    playerVelocity += Vector2(0.f, 23.f);;
+        //    playerVelocity += Vector2(0.f, 23.f);;
 
-      runningTime = 0.f;
+        runningTime = 0.f;
     }
 
     if (Engine::get_singleton()->is_editor_hint())
@@ -191,41 +171,37 @@ void The_Game::_process(double delta)
     }
     else
     {
-
         static char scoreText[256]; 
 
         if (scoreLabel)
         {
             sprintf(scoreText, "SCORE: %f", runningTime_noReset);
             scoreLabel->set_text(scoreText);
-                }
+        }
 
-//        Vector2 newCameraPos = Vector2( runningTime_noReset/10.f+(10.0 * sin(runningTime)), runningTime_noReset/10.f+(10.0 * -cos(runningTime)));
+        //        Vector2 newCameraPos = Vector2( runningTime_noReset/10.f+(10.0 * sin(runningTime)), runningTime_noReset/10.f+(10.0 * -cos(runningTime)));
 
 
-// TODO: E.g. constants like this should be exposed in the editor window.
-// we actually already began something like that. how do we continue
-// to complete that thing?
+        // TODO: E.g. constants like this should be exposed in the editor window.
+        // we actually already began something like that. how do we continue
+        // to complete that thing?
 
         Vector2 newCameraPos = Vector2( 0.f, runningTime_noReset* int32_t(values[CAMERA_SPEED_PROP]) );
-    camera->call("set_position", newCameraPos);
+        camera->call("set_position", newCameraPos);
 
-	Vector2 new_position = player->get_position() + playerVelocity * delta;
+        Vector2 new_position = player->get_position() + playerVelocity * delta;
 
-    float speedX = abs(playerVelocity.x);
-    float speedY = abs(playerVelocity.y);
+        float speedX = abs(playerVelocity.x);
+        float speedY = abs(playerVelocity.y);
 
-    // apply drag.
-    playerVelocity.x += 0.1f * speedX * speedX * -sign(playerVelocity.x);
-    playerVelocity.y += 0.1f * speedY * speedY * -sign(playerVelocity.y);
+        // apply drag.
+        playerVelocity.x += 0.1f * speedX * speedX * -sign(playerVelocity.x);
+        playerVelocity.y += 0.1f * speedY * speedY * -sign(playerVelocity.y);
 
-    player->set_position(new_position);
+        player->set_position(new_position);
 
-//Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
-
-//	player->call("set_position", new_position);//  set_position(new_position);
+        // Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
+        //	player->call("set_position", new_position);//  set_position(new_position);
     }
-
-
 }
 
