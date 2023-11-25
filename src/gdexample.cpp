@@ -3,33 +3,11 @@
 
 using namespace godot;
 
-void Beta::_bind_methods() {
+float sign(float a)
+{
+    return a > 0 ? 1.f :  -1.f;
 }
 
-Beta::Beta() {
-	// Initialize any variables here.
-	time_passed = 0.0;
-}
-
-Beta::~Beta() {
-	// Add your cleanup here.
-}
-
-void Beta::_process(double delta) {
-	time_passed += delta;
-
-	Vector2 new_position = Vector2(10.0 + (10.0 * sin(time_passed * 2.0)), 10.0 + (10.0 * cos(time_passed * 2.0)));
-
-	set_position(new_position);
-
-    // have I hit the thing ?
-
-// get by tag
-
-
-
-
-}
 
 void The_Game::_bind_methods()
 {}
@@ -42,14 +20,24 @@ void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
     
 }
 
+// TODO: find the way where we can hook the very start of the game
+// each time the play bttn is pressed.
+
 void The_Game::_ready()
 {
+
     obstacle = get_node<Node2D>("Obstacle");
     node = get_node<Node>("printer_node");
     audioStreamPlayer = get_node<Node>("AudioStreamPlayer");
-    player = get_node<Node>("player");
+    player = get_node<Node2D>("player");
     camera = get_node<Node>("camera");
-    audioStreamPlayer->call("play");
+
+    jumpPlayer = get_node<Node>("AudioStreamPlayer2");
+
+
+//    audioStreamPlayer->call("play");
+
+
 
 // TODO: log the shits here if we can't find the stuff.
     if (obstacle)
@@ -79,6 +67,13 @@ void The_Game::_ready()
 
     }
 
+// TODO: is there any way that we can just quit game if we can't get
+// any of these things? that's the sensible thing to do.
+
+// Set the init player velocity.
+    player->set_position(Vector2(0,0));
+//    playerVelocity = Vector2(0.f, -20.f);;
+    playerVelocity = Vector2(0,0);
 
 }
 
@@ -108,11 +103,20 @@ if (mouseBttnEvent){
 
 }
 
+// TODO: we could hide the mouse cursor and animate a sprite to follow
+// where the user is pointing their mouse. that way, we can have a sort
+// of animated mouse. I imagine this to be where it rotates the cursor
+// such that when hovering over a button or something is selected,
+// it points always like an arrow to that thing.
+
+// TODO: when the window size is adjusted, adjust the primary window.
+// TODO: prob. want to do some sort of singleton design pattern idea.
+
 void The_Game::_process(double delta)
 {
     runningTime += delta;
 
-    if (runningTime > 1.f)
+    if (runningTime > 5.f)
     {
         // do something interesting.
         const char *str = "we rich";        
@@ -121,18 +125,41 @@ void The_Game::_process(double delta)
 //        printf( "%s, %f, %d", str, something, d++ );
 
 // can we get into a debugger?
-        node->call( "my_print", "Hello, World!" ); 
+        node->call( "my_print", "Jump!" ); 
 
+    jumpPlayer->call("play");
+
+//    playerVelocity += Vector2(0.f, 23.f);;
 
       runningTime = 0.f;
     }
 
+    if (Engine::get_singleton()->is_editor_hint())
+    {
+        // do nothing
+    }
+    else
+    {
+
     Vector2 newCameraPos = Vector2((10.0 * sin(runningTime)), (10.0 * -cos(runningTime)));
     camera->call("set_position", newCameraPos);
 
-	Vector2 new_position = Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
+	Vector2 new_position = player->get_position() + playerVelocity * delta;
+
+    float speedX = abs(playerVelocity.x);
+    float speedY = abs(playerVelocity.y);
+
+    // apply drag.
+    playerVelocity.x += 0.1f * speedX * speedX * -sign(playerVelocity.x);
+    playerVelocity.y += 0.1f * speedY * speedY * -sign(playerVelocity.y);
+
+    player->set_position(new_position);
+
+//Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
 
 //	player->call("set_position", new_position);//  set_position(new_position);
+    }
+
 
 }
 

@@ -1,11 +1,14 @@
 #ifndef GDEXAMPLE_H
 #define GDEXAMPLE_H
 
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/input_event_mouse.hpp>
 #include <godot_cpp/classes/input_event_mouse_button.hpp>
 #include <godot_cpp/classes/rectangle_shape2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
+
 
 namespace godot {
 
@@ -21,8 +24,13 @@ class The_Game : public Node {
     Node *node;
     Node *audioStreamPlayer;
 
-    Node *player;
+// TODO: this is not a scalable solution.
+    Node *jumpPlayer;
+
+    Node2D *player;
     Node2D *obstacle;
+
+    Vector2 playerVelocity;
 
     double runningTime = 0.f;
 
@@ -38,22 +46,7 @@ public:
 
     };
 
-class Beta : public Sprite2D {
-	GDCLASS(Beta, Sprite2D)
 
-private:
-	double time_passed;
-
-protected:
-	static void _bind_methods();
-
-public:
-	Beta();
-	~Beta();
-
-	void _process(double delta);
-};
-
-}
+} // end namespace.
 
 #endif

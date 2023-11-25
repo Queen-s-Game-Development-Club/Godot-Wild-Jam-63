@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnsearqqbjmkq"]
+[gd_scene load_steps=3 format=3 uid="uid://bnsearqqbjmkq"]
 
 [ext_resource type="Script" path="res://my_button.gd" id="1_63b6p"]
+[ext_resource type="FontFile" uid="uid://c8qft1giiu4ny" path="res://Arial Italic.ttf" id="1_xuhwv"]
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -10,16 +11,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "MAIN MENU"
+offset_right = 1152.0
+offset_bottom = 648.0
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 45.0
-offset_right = 51.0
-offset_bottom = 53.0
+[node name="VSplitContainer2" type="VSplitContainer" parent="CenterContainer"]
+layout_mode = 2
+dragger_visibility = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CenterContainer/VSplitContainer2"]
+layout_mode = 2
+dragger_visibility = 1
+
+[node name="Label" type="Label" parent="CenterContainer/VSplitContainer2/VSplitContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_xuhwv")
+theme_override_font_sizes/font_size = 24
+text = "MAIN MENU"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VSplitContainer2/VSplitContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_xuhwv")
+theme_override_font_sizes/font_size = 20
+text = "PRESS THE BUTTON TO START THE GAME."
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/VSplitContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
 script = ExtResource("1_63b6p")
