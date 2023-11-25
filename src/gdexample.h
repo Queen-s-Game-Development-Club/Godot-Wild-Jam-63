@@ -20,6 +20,11 @@ class The_Game : public Node {
     Node *audioStreamPlayer;
 
     Node *player;
+    Node *obstacle;
+
+    double runningTime = 0.f;
+
+    Node *camera;
 
 public:
     void _ready();
