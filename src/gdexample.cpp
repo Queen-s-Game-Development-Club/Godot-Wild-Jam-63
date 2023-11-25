@@ -102,6 +102,10 @@ void The_Game::_ready()
 
     }
 
+    Node *canvas = get_node<Node>("CanvasLayer");
+    if (canvas)
+        scoreLabel = canvas->get_node<Label>("Label");
+
 // TODO: is there any way that we can just quit game if we can't get
 // any of these things? that's the sensible thing to do.
 
@@ -181,6 +185,14 @@ void The_Game::_process(double delta)
     }
     else
     {
+
+        static char scoreText[256]; 
+
+        if (scoreLabel)
+        {
+            sprintf(scoreText, "SCORE: %f", runningTime_noReset);
+            scoreLabel->set_text(scoreText);
+                }
 
 //        Vector2 newCameraPos = Vector2( runningTime_noReset/10.f+(10.0 * sin(runningTime)), runningTime_noReset/10.f+(10.0 * -cos(runningTime)));
 

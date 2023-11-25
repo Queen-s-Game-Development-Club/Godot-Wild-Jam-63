@@ -8,6 +8,7 @@
 #include <godot_cpp/classes/input_event_mouse_button.hpp>
 #include <godot_cpp/classes/rectangle_shape2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 #include <godot_cpp/templates/vmap.hpp>
 
@@ -29,6 +30,8 @@ class The_Game : public Node {
     bool _get(const StringName &name, Variant &ret) const;
 
     VMap<StringName, Variant> values;
+
+    Label *scoreLabel;
 
     Node *node;
     Node *audioStreamPlayer;
