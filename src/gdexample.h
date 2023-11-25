@@ -2,6 +2,8 @@
 #define GDEXAMPLE_H
 
 #include <godot_cpp/classes/sprite2d.hpp>
+#include <godot_cpp/classes/input_event_mouse.hpp>
+#include <godot_cpp/classes/input_event_mouse_button.hpp>
 
 namespace godot {
 
@@ -22,6 +24,7 @@ class The_Game : public Node {
 public:
     void _ready();
     void _process(double delta);
+    void _input(const Ref<InputEvent> &event);
 
     };
 

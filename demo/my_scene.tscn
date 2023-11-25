@@ -22,6 +22,6 @@ polygon = PackedVector2Array(11, -11, 0, -9.53694, -11, -1, 0, 11, 11, 0)
 script = ExtResource("1_cym12")
 
 [node name="player" type="Sprite2D" parent="The_Game"]
-position = Vector2(18.9974, 14.3643)
+position = Vector2(16.8447, 17.2904)
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("3_7m604")

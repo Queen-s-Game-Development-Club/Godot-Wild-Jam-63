@@ -10,5 +10,5 @@ func _ready():
 func _process(delta):
 	pass
 	
-func my_print():
-	print_rich( "Hello, World!" )
+func my_print(string):
+	print_rich( string )

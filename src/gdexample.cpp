@@ -53,6 +53,32 @@ void The_Game::_ready()
     audioStreamPlayer->call("play");
 }
 
+void The_Game::_input(const Ref<InputEvent> &event)
+{
+    
+#if 0
+const InputEventKey *key_event = Object::cast_to<const InputEventKey>(*event);	
+if (key_event) {
+		emit_custom_signal(String("_input: ") + key_event->get_key_label(), key_event->get_unicode());
+	}
+#endif
+
+const InputEventMouseButton *mouseBttnEvent = Object::cast_to<const InputEventMouseButton>(*event);
+
+if (mouseBttnEvent){
+        node->call( "my_print", "mouse button event" ); 
+}
+
+#if 0
+   elif event is InputEventMouseMotion:
+	   print("Mouse Motion at: ", event.position)
+
+           // Print the size of the viewport.
+   print("Viewport Resolution is: ", get_viewport().get_visible_rect().size)
+#endif
+
+}
+
 void The_Game::_process(double delta)
 {
     runningTime += delta;
@@ -66,7 +92,7 @@ void The_Game::_process(double delta)
 //        printf( "%s, %f, %d", str, something, d++ );
 
 // can we get into a debugger?
-        node->call( "my_print" ); 
+        node->call( "my_print", "Hello, World!" ); 
 
 
       runningTime = 0.f;
