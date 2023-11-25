@@ -1,34 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbs5tbaag702m"]
+[gd_scene load_steps=7 format=3 uid="uid://dbs5tbaag702m"]
 
 [ext_resource type="Script" path="res://printer.gd" id="1_cym12"]
 [ext_resource type="AudioStream" uid="uid://bbfam3mvael7" path="res://meme_song.mp3" id="1_qaf35"]
 [ext_resource type="Texture2D" uid="uid://dx6aseu5s4kkq" path="res://skele.png" id="2_pmf2l"]
 [ext_resource type="Texture2D" uid="uid://drceqcdl4s5go" path="res://Beta_Happy.png" id="3_7m604"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3p1o"]
+size = Vector2(179, 359)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ah75"]
+size = Vector2(1820, 1245)
+
 [node name="myScene" type="Node2D"]
 
 [node name="The_Game" type="The_Game" parent="."]
 
 [node name="camera" type="Camera2D" parent="The_Game"]
-position = Vector2(3.42898, -9.39373)
+position = Vector2(5.67576, -8.23321)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="The_Game"]
 stream = ExtResource("1_qaf35")
 
 [node name="Obstacle" type="StaticBody2D" parent="The_Game"]
-position = Vector2(256, 279)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="The_Game/Obstacle"]
-scale = Vector2(4.45028, 3.91051)
-polygon = PackedVector2Array(11, -11, 0, -9.53694, -10.2634, 1.32335, -1.05049, 17.1781, 16.9259, 2.85768)
+position = Vector2(0, 279)
+scale = Vector2(3.75412, 0.433306)
 
 [node name="Sprite2D" type="Sprite2D" parent="The_Game/Obstacle"]
 texture = ExtResource("2_pmf2l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="The_Game/Obstacle"]
+position = Vector2(0.532746, 1.15393)
+shape = SubResource("RectangleShape2D_t3p1o")
 
 [node name="printer_node" type="Node" parent="The_Game"]
 script = ExtResource("1_cym12")
 
 [node name="player" type="Sprite2D" parent="The_Game"]
-position = Vector2(16.4422, 17.6484)
+position = Vector2(19.9751, 10.7056)
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("3_7m604")
+
+[node name="Area2D" type="Area2D" parent="The_Game/player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="The_Game/player/Area2D"]
+position = Vector2(-29.502, 155.888)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_2ah75")

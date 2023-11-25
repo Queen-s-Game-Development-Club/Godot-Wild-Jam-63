@@ -4,6 +4,8 @@
 #include <godot_cpp/classes/sprite2d.hpp>
 #include <godot_cpp/classes/input_event_mouse.hpp>
 #include <godot_cpp/classes/input_event_mouse_button.hpp>
+#include <godot_cpp/classes/rectangle_shape2d.hpp>
+#include <godot_cpp/classes/collision_shape2d.hpp>
 
 namespace godot {
 
@@ -20,11 +22,14 @@ class The_Game : public Node {
     Node *audioStreamPlayer;
 
     Node *player;
-    Node *obstacle;
+    Node2D *obstacle;
 
     double runningTime = 0.f;
 
     Node *camera;
+
+    RectangleShape2D groundPlaneColBox;
+    Ref<Shape2D> groundPlaneRef;
 
 public:
     void _ready();

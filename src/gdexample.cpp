@@ -44,12 +44,42 @@ void The_Game::_get_property_list(List<PropertyInfo> *p_list) const
 
 void The_Game::_ready()
 {
-    obstacle = get_node<Node>("Obstacle");
+    obstacle = get_node<Node2D>("Obstacle");
     node = get_node<Node>("printer_node");
     audioStreamPlayer = get_node<Node>("AudioStreamPlayer");
     player = get_node<Node>("player");
     camera = get_node<Node>("camera");
     audioStreamPlayer->call("play");
+
+// TODO: log the shits here if we can't find the stuff.
+    if (obstacle)
+    {
+        int width;
+        int height;
+        Sprite2D *sprite = obstacle->get_node<Sprite2D>("Sprite2D");
+        if (sprite)
+        {
+            Ref<Texture2D> texture = sprite->get_texture();
+            if (texture.is_valid())
+            {
+                width = texture->get_width();
+                height = texture->get_height();
+            }
+        }
+
+        CollisionShape2D *shape = obstacle->get_node<CollisionShape2D>("CollisionShape2D");
+
+        if (shape)
+        {
+// create a shape 2d.
+            groundPlaneColBox.set_size(Vector2(width, height));
+            groundPlaneRef = Ref<Shape2D>(&groundPlaneColBox);
+            shape->set_shape(groundPlaneRef);
+        }
+
+    }
+
+
 }
 
 void The_Game::_input(const Ref<InputEvent> &event)
@@ -102,7 +132,7 @@ void The_Game::_process(double delta)
 
 	Vector2 new_position = Vector2(10.0 + (10.0 * sin(runningTime * 2.0)), 10.0 + (10.0 * cos(runningTime * 2.0)));
 
-	player->call("set_position", new_position);//  set_position(new_position);
+//	player->call("set_position", new_position);//  set_position(new_position);
 
 }
 
